@@ -27,18 +27,19 @@ services:
     image: docker.elastic.co/logstash/logstash:8.7.1
     volumes:
       - ./config/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - ./logs/:/logs/
     depends_on:
       elasticsearch:
         condition: service_healthy
 
-  filebeat:
-    image: docker.elastic.co/beats/filebeat:8.7.1
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-    volumes:
-      - ./config/filebeat.yml:/usr/share/filebeat/filebeat.yml
-      - ./logs/:/logs/
+  #filebeat:
+  #  image: docker.elastic.co/beats/filebeat:8.7.1
+  #  depends_on:
+  #    elasticsearch:
+  #      condition: service_healthy
+  #  volumes:
+  #    - ./config/filebeat.yml:/usr/share/filebeat/filebeat.yml
+  #    - ./logs/:/logs/
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.7.1
