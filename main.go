@@ -4,12 +4,11 @@ import (
 	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"log"
 	"os"
 	"time"
 )
 
-const logPath = "./logs/go.log"
+const logPath = "http://logstash:5228"
 
 var logger *zap.Logger
 
@@ -24,10 +23,10 @@ func main() {
 }
 
 func setupLog() {
-	file, _ := os.OpenFile(logPath, os.O_RDONLY|os.O_CREATE, 0666)
-	log.SetOutput(file)
+	_, _ = os.OpenFile(logPath, os.O_RDONLY|os.O_CREATE, 0666)
+	//log.SetOutput(file)
 	c := zap.NewProductionConfig()
-	c.OutputPaths = []string{"stdout", logPath}
+	c.OutputPaths = []string{"url", logPath}
 	logger, _ = c.Build()
 
 }
